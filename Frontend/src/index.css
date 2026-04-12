@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Base layer resets to guarantee a flawless dark mode experience */
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #020617; /* Matches Tailwind's slate-950 */
+    color: #f8fafc; /* Matches Tailwind's slate-50 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

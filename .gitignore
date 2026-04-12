@@ -1,0 +1,9 @@
+# Block Frontend heavy files and secrets
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+
+# Block Backend heavy files and secrets
+backend/node_modules/
+backend/.env
