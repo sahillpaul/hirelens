@@ -10,7 +10,7 @@ const app = express();
 
 const allowedOrigins = [
     'http://localhost:5173', // Your local Vite server
-    process.env.FRONTEND_URL // We will set this in Render later!
+    'hirelens-eta.vercel.app' // We will set this in Render later!
 ];
 
 // 2. Global Middlewares
