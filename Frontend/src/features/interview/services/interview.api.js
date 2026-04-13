@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
-
-// 1. Create an Axios instance with the base URL and credentials
+// 1. Create an Axios instance just like in auth.api.js
 const api = axios.create({
-    baseURL: `${API_BASE_URL}/interview`, 
+    // Use the base URL directly (which is "/" in Vercel, or localhost:3000 locally)
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000', 
     withCredentials: true // Ensures cookies (like the JWT token) are sent with every request
 });
 
@@ -29,7 +28,8 @@ export const generateInterviewReport = async (jobDescription, selfDescription, r
             }
         }
 
-        const response = await api.post('/', formData);
+        // FIX: Explicitly spell out the /api/interview route here!
+        const response = await api.post('/api/interview/', formData);
         return response.data;
         
     } catch (error) {
@@ -43,7 +43,8 @@ export const generateInterviewReport = async (jobDescription, selfDescription, r
  */
 export const getInterviewReportById = async (interviewId) => {
     try {
-        const response = await api.get(`/${interviewId}`);
+        // FIX: Explicitly spell out the /api/interview route here!
+        const response = await api.get(`/api/interview/${interviewId}`);
         return response.data;
     } catch (error) {
         console.error("API Error in getInterviewReportById:", error);
@@ -56,7 +57,8 @@ export const getInterviewReportById = async (interviewId) => {
  */
 export const getAllInterviewReports = async () => {
     try {
-        const response = await api.get('/');
+        // FIX: Explicitly spell out the /api/interview route here!
+        const response = await api.get('/api/interview/');
         return response.data;
     } catch (error) {
         console.error("API Error in getAllInterviewReports:", error);
