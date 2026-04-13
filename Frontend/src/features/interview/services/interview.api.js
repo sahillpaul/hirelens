@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-// 1. Create an Axios instance just like in auth.api.js
 const api = axios.create({
-    // Use the base URL directly (which is "/" in Vercel, or localhost:3000 locally)
     baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000', 
-    withCredentials: true // Ensures cookies (like the JWT token) are sent with every request
+    withCredentials: true 
 });
 
 /**
@@ -13,28 +11,23 @@ const api = axios.create({
 export const generateInterviewReport = async (jobDescription, selfDescription, resumeFile) => {
     try {
         const formData = new FormData();
-        
-        // SAFEY CHECK 1: Prevent sending the literal string "undefined" to the backend
         formData.append('jobDescription', jobDescription || '');
         formData.append('selfDescription', selfDescription || '');
 
-        // SAFETY CHECK 2: The "Smoking Gun" Fix
-        // Ensure we are sending a single, physical File object, NOT a FileList array
         if (resumeFile) {
             const actualFile = resumeFile instanceof FileList ? resumeFile[0] : resumeFile;
-            
             if (actualFile) {
                 formData.append('resume', actualFile); 
             }
         }
 
-        // FIX: Explicitly spell out the /api/interview route here!
-        const response = await api.post('/api/interview/', formData);
+        // 🚨 SAFELY UPDATED: explicitly calling '/api/interview/generate'
+        const response = await api.post('/api/interview/generate', formData);
         return response.data;
         
     } catch (error) {
         console.error("API Error in generateInterviewReport:", error);
-        throw error; // We MUST throw the error so your UI loader knows to stop spinning!
+        throw error; 
     }
 };
 
@@ -43,7 +36,6 @@ export const generateInterviewReport = async (jobDescription, selfDescription, r
  */
 export const getInterviewReportById = async (interviewId) => {
     try {
-        // FIX: Explicitly spell out the /api/interview route here!
         const response = await api.get(`/api/interview/${interviewId}`);
         return response.data;
     } catch (error) {
@@ -57,8 +49,8 @@ export const getInterviewReportById = async (interviewId) => {
  */
 export const getAllInterviewReports = async () => {
     try {
-        // FIX: Explicitly spell out the /api/interview route here!
-        const response = await api.get('/api/interview/');
+        // 🚨 SAFELY UPDATED: explicitly calling '/api/interview/all'
+        const response = await api.get('/api/interview/all');
         return response.data;
     } catch (error) {
         console.error("API Error in getAllInterviewReports:", error);
