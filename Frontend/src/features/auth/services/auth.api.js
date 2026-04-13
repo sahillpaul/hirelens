@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3000",
+    // This tells Vite: "Use the live link in Vercel, but use localhost on my laptop"
+    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000",
     withCredentials: true,
 });
 
